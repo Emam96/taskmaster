@@ -1,6 +1,9 @@
 package com.example.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.content.Intent;
@@ -12,6 +15,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -20,20 +26,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        List<Task> tasks = new ArrayList<Task>();
+        tasks.add(new Task("Read","Read assignment", "assigned"));
+        tasks.add(new Task("Lab","Lab assignment", "in progress"));
+        tasks.add(new Task("Code challenge","Code challenge assignment", "complete"));
+
+
+        RecyclerView recyclerView = findViewById(R.id.tasksview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new TaskAdapter(tasks));
+
+
+//        Button details = (Button) findViewById(R.id.details);
+//        details.setOnClickListener(new  View.OnClickListener(){
+//            @Override
+//            public void onClick(View v){
+//
+//                Intent goToTaskDetailsPageActivityIntent = new Intent(MainActivity.this, Detail.class);
+////                goToTaskDetailsPageActivityIntent.putExtra("taskTitle", task.title);
+//                MainActivity.this.startActivity(goToTaskDetailsPageActivityIntent);
+//            }
+//        });
+
+
 
 
 
         Button ButtonOne = (Button) findViewById(R.id.buttonone);
         Button ButtonTwo = (Button) findViewById(R.id.buttontwo);
-        Button task1 = (Button) findViewById(R.id.task1);
-        Button task2 = (Button) findViewById(R.id.task2);
-        Button task3 = (Button) findViewById(R.id.task3);
         Button settings = (Button) findViewById(R.id.settings);
 
-
-        String buttonText1 = task1.getText().toString();
-        String buttonText2 = task2.getText().toString();
-        String buttonText3 = task3.getText().toString();
 
         settings.setOnClickListener(new  View.OnClickListener(){
             @Override
@@ -60,39 +82,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        task1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent goToDetailsPage = new Intent(MainActivity.this,Detail.class);
-                goToDetailsPage.putExtra("taskTitle", buttonText1);
-                startActivity(goToDetailsPage);
-            }
-        });
-        task2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent goToDetailsPage = new Intent(MainActivity.this,Detail.class);
-                goToDetailsPage.putExtra("taskTitle", buttonText2);
-                startActivity(goToDetailsPage);
-            }
-        });
-        task3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent goToDetailsPage = new Intent(MainActivity.this,Detail.class);
-                goToDetailsPage.putExtra("taskTitle", buttonText3);
-                startActivity(goToDetailsPage);
-            }
-        });
-
-
-
-
-
     }
+
 
 
     @Override
