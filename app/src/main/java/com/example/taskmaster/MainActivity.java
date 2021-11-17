@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -26,27 +28,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        List<Task> tasks = new ArrayList<Task>();
-        tasks.add(new Task("Read","Read assignment", "assigned"));
-        tasks.add(new Task("Lab","Lab assignment", "in progress"));
-        tasks.add(new Task("Code challenge","Code challenge assignment", "complete"));
 
 
-        RecyclerView recyclerView = findViewById(R.id.tasksview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new TaskAdapter(tasks));
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                TaskDatabase db = Room.databaseBuilder(getApplicationContext(),
+                        TaskDatabase.class, "task").build();
+                TaskDao taskDao = db.taskDao();
+                List<Task> tasks =   taskDao.getAll();
 
+                RecyclerView recyclerView = findViewById(R.id.tasksview);
+                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                recyclerView.setAdapter(new TaskAdapter(tasks));
+            }
+        });
 
-//        Button details = (Button) findViewById(R.id.details);
-//        details.setOnClickListener(new  View.OnClickListener(){
-//            @Override
-//            public void onClick(View v){
-//
-//                Intent goToTaskDetailsPageActivityIntent = new Intent(MainActivity.this, Detail.class);
-////                goToTaskDetailsPageActivityIntent.putExtra("taskTitle", task.title);
-//                MainActivity.this.startActivity(goToTaskDetailsPageActivityIntent);
-//            }
-//        });
 
 
 
@@ -93,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
         String username = sharedPreferences.getString("username","User's tasks");
         TextView nameLabel = findViewById(R.id.nameLabel);
         nameLabel.setText(username+" tasks");
+
+
+
+
 
     }
 

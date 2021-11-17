@@ -17,6 +17,12 @@
 
 * We refactored our hard coded data into a recycled view loop
 
+
+
+## Day 4
+
+* We utilized the room db and rendered the data from it into the mainpage 
+
 ![image description](screenshots/all.PNG)
 ![image description](screenshots/thirdmain.jpeg)
 ![image description](screenshots/add.jpeg)

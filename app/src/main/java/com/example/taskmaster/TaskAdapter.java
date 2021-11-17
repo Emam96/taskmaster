@@ -58,11 +58,17 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
 
 
         String titleToHandle = title.getText().toString();
+        String descToHandle = body.getText().toString();
+        String statetodaaaamn = state.getText().toString();
+
         details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(),Detail.class);
                 i.putExtra("taskTitle", titleToHandle);
+                i.putExtra("desc", descToHandle);
+                i.putExtra("state", statetodaaaamn);
+
                 v.getContext().startActivity(i);
             }
         });

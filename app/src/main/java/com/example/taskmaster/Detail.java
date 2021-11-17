@@ -18,6 +18,14 @@ public class Detail extends AppCompatActivity {
         TextView tasktitle = findViewById(R.id.taskTitle);
         tasktitle.setText(taskName);
 
+        String desc = getIntent().getStringExtra("desc");
+        TextView descstuff = findViewById(R.id.desc);
+        descstuff.setText(desc);
+
+        String state = getIntent().getStringExtra("state");
+        TextView statestuff = findViewById(R.id.statestate);
+        statestuff.setText(state);
+
 
 
     }
