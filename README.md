@@ -29,10 +29,5 @@
 ![image description](screenshots/Screenshot_1637401030.png)
 ![image description](screenshots/Screenshot_1637401035.png)
 
-<style> 
-img{
 
-width: 150px;
-}
-
-</style>
+<img src="screenshots/Screenshot_1637401011.png" alt="drawing" width="200"/>
