@@ -13,54 +13,53 @@
 
         <TextView
             android:id="@+id/titletext"
-            android:layout_width="190dp"
-            android:layout_height="31dp"
+            android:layout_width="233dp"
+            android:layout_height="33dp"
 
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.051"
+            app:layout_constraintHorizontal_bias="0.056"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.402" />
+            app:layout_constraintVertical_bias="0.084" />
 
         <TextView
             android:id="@+id/state"
-            android:layout_width="188dp"
-            android:layout_height="37dp"
+            android:layout_width="228dp"
+            android:layout_height="32dp"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.053"
+            app:layout_constraintHorizontal_bias="0.054"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titletext"
-            app:layout_constraintVertical_bias="0.134" />
+            app:layout_constraintVertical_bias="0.24" />
 
         <TextView
             android:id="@+id/body"
             android:layout_width="227dp"
             android:layout_height="53dp"
-            android:layout_marginTop="4dp"
             android:text="TextView"
             android:textAlignment="viewStart"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/state"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.053"
+            app:layout_constraintHorizontal_bias="0.059"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/state"
-            app:layout_constraintVertical_bias="0.137" />
+            app:layout_constraintTop_toBottomOf="@+id/titletext"
+            app:layout_constraintVertical_bias="0.575" />
 
         <Button
             android:id="@+id/details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="details"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/line"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.572"
+            app:layout_constraintHorizontal_bias="0.649"
             app:layout_constraintStart_toEndOf="@+id/state"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.502" />
+            app:layout_constraintVertical_bias="0.849" />
 
         <androidx.constraintlayout.widget.Barrier
             android:layout_width="wrap_content"
@@ -102,13 +101,17 @@
 
         <TextView
             android:id="@+id/line"
-            android:layout_width="566dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:text="______________________________________________________________________________________"
+            android:layout_width="429dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="32dp"
+            android:text="__________________________________________________________"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/state"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

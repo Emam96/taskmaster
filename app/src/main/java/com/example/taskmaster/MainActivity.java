@@ -91,10 +91,6 @@ public class MainActivity extends AppCompatActivity {
         TextView nameLabel = findViewById(R.id.nameLabel);
         nameLabel.setText(username+" tasks");
 
-
-
-
-
     }
 
 

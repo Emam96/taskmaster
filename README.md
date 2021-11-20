@@ -23,7 +23,16 @@
 
 * We utilized the room db and rendered the data from it into the mainpage 
 
-![image description](screenshots/all.PNG)
-![image description](screenshots/thirdmain.jpeg)
-![image description](screenshots/add.jpeg)
-![image description](screenshots/settings.PNG)
+![image description](screenshots/Screenshot_1637401011.png)
+![image description](screenshots/Screenshot_1637401020.png)
+![image description](screenshots/Screenshot_1637401026.png)
+![image description](screenshots/Screenshot_1637401030.png)
+![image description](screenshots/Screenshot_1637401035.png)
+
+<style> 
+img{
+
+width: 150px;
+}
+
+</style>
