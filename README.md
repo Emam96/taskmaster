@@ -23,11 +23,10 @@
 
 * We utilized the room db and rendered the data from it into the mainpage 
 
-![image description](screenshots/Screenshot_1637401011.png)
-![image description](screenshots/Screenshot_1637401020.png)
-![image description](screenshots/Screenshot_1637401026.png)
-![image description](screenshots/Screenshot_1637401030.png)
-![image description](screenshots/Screenshot_1637401035.png)
+
 
 
 <img src="screenshots/Screenshot_1637401011.png" alt="drawing" width="200"/>
+<img src="screenshots/Screenshot_1637401026.png" alt="drawing" width="200"/>
+<img src="screenshots/Screenshot_1637401030.png" alt="drawing" width="200"/>
+<img src="screenshots/Screenshot_1637401035.png" alt="drawing" width="200"/>
