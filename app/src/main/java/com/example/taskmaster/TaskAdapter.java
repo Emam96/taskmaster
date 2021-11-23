@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.datastore.generated.model.Task;
+
 import java.util.List;
 
 public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder>{
@@ -51,9 +53,9 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
         TextView state = holder.itemView.findViewById(R.id.state);
         TextView line = holder.itemView.findViewById(R.id.line);
         Button details= holder.itemView.findViewById(R.id.details);
-        title.setText(holder.task.title);
-        body.setText(holder.task.body);
-        state.setText(holder.task.state);
+        title.setText(holder.task.getTitle());
+        body.setText(holder.task.getBody());
+        state.setText(holder.task.getState());
 
 
 

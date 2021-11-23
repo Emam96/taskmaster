@@ -23,7 +23,9 @@
 
 * We utilized the room db and rendered the data from it into the mainpage 
 
+## Day 5 
 
+* We added aws services "Amplify" instead of room DB
 
 
 <img src="screenshots/Screenshot_1637401011.png" alt="drawing" width="200"/>
