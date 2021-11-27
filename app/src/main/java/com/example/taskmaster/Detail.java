@@ -3,6 +3,7 @@ package com.example.taskmaster;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -29,4 +30,11 @@ public class Detail extends AppCompatActivity {
 
 
     }
+
+    public void back( View view){
+
+        this.finish();
+
+    }
+
 }
