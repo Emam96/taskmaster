@@ -3,94 +3,95 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="150dp"
+    android:layout_margin="8dp"
+
+    android:background="@drawable/shadow"
+    android:foregroundTint="#3C000000"
+
     tools:context=".TaskFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="150dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:foregroundTint="#86040404">
 
         <TextView
             android:id="@+id/titletext"
             android:layout_width="233dp"
             android:layout_height="33dp"
 
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/roboto_thin"
             android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.056"
+            android:textColor="#02072B"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.084" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/state"
-            android:layout_width="228dp"
-            android:layout_height="32dp"
+            android:layout_width="233dp"
+            android:layout_height="33dp"
+
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/roboto_thin"
             android:text="TextView"
+            android:textColor="#000000"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.054"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titletext"
-            app:layout_constraintVertical_bias="0.24" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.863" />
 
         <TextView
             android:id="@+id/body"
-            android:layout_width="227dp"
-            android:layout_height="53dp"
+            android:layout_width="233dp"
+            android:layout_height="33dp"
+
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/roboto_thin"
             android:text="TextView"
-            android:textAlignment="viewStart"
-            app:layout_constraintBottom_toTopOf="@+id/state"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.059"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titletext"
-            app:layout_constraintVertical_bias="0.575" />
-
-        <Button
-            android:id="@+id/details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="details"
-            app:layout_constraintBottom_toTopOf="@+id/line"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.649"
-            app:layout_constraintStart_toEndOf="@+id/state"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.849" />
+            app:layout_constraintVertical_bias="0.504" />
 
         <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:barrierDirection="left"
-            tools:layout_editor_absoluteX="159dp"
-            tools:layout_editor_absoluteY="114dp" />
+            app:barrierDirection="left" />
 
         <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:barrierDirection="left"
-            tools:layout_editor_absoluteX="155dp"
-            tools:layout_editor_absoluteY="67dp" />
+            app:barrierDirection="left" />
 
         <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="left"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="120dp" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:barrierDirection="left"
-            tools:layout_editor_absoluteX="212dp"
-            tools:layout_editor_absoluteY="124dp" />
+            app:barrierDirection="left" />
 
         <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -98,20 +99,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/line"
-            android:layout_width="429dp"
-            android:layout_height="38dp"
-            android:layout_marginTop="32dp"
-            android:text="__________________________________________________________"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/state"
-            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

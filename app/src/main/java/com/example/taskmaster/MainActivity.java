@@ -7,32 +7,63 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.datastore.generated.model.Team;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.FadeInAnimator;
+import jp.wasabeef.recyclerview.animators.FadeInRightAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+
 public class MainActivity extends AppCompatActivity {
+
+
+    List<Task> tasks = new ArrayList<>();
+    TaskAdapter adapter = new TaskAdapter(tasks);
+    Handler handler = new Handler();
+
+    Runnable runnable = new Runnable() {
+        @SuppressLint("NotifyDataSetChanged")
+        @Override
+        public void run() {
+            adapter.notifyDataSetChanged();
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         try {
             Amplify.addPlugin(new AWSApiPlugin());
@@ -48,24 +79,14 @@ public class MainActivity extends AppCompatActivity {
                 failure -> Log.e("Tutorial", "Observation failed.", failure),
                 () -> Log.i("Tutorial", "Observation complete.")
         );
+        Amplify.DataStore.observe(Team.class,
+                started -> Log.i("Tutorial", "Observation began."),
+                change -> Log.i("Tutorial", change.item().toString()),
+                failure -> Log.e("Tutorial", "Observation failed.", failure),
+                () -> Log.i("Tutorial", "Observation complete.")
+        );
 
-
-
-//        AsyncTask.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                TaskDatabase db = Room.databaseBuilder(getApplicationContext(),
-//                        TaskDatabase.class, "task").build();
-//                TaskDao taskDao = db.taskDao();
-//                List<Task> tasks =   taskDao.getAll();
-//
-//                RecyclerView recyclerView = findViewById(R.id.tasksview);
-//                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-//                recyclerView.setAdapter(new TaskAdapter(tasks));
-//            }
-//        });
-
-         List tasks = new ArrayList();
+  List tasks = new ArrayList();
 
         Amplify.DataStore.query(
                 Task.class,
@@ -75,20 +96,29 @@ public class MainActivity extends AppCompatActivity {
                         tasks.add(item);
                         Log.i("Amplify", "Id " + item.getId());
                     }
+
                 },
                 failure -> Log.e("Amplify", "Could not query DataStore", failure)
         );
 
 
+                // REVERSED
+                RecyclerView recyclerView = findViewById(R.id.tasksview);
+                recyclerView.setAdapter(adapter);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+                linearLayoutManager.setReverseLayout(true);
+                linearLayoutManager.setStackFromEnd(true);
+                recyclerView.setLayoutManager(linearLayoutManager);
+
+                // ANIMATION
+                recyclerView.setAdapter(new ScaleInAnimationAdapter(adapter));
+
+                ImageView ButtonOne = (ImageView) findViewById(R.id.buttonone);
+                ImageView ButtonTwo =  findViewById(R.id.buttontwo);
+                ImageView settings =  findViewById(R.id.settings);
 
 
-        RecyclerView recyclerView = findViewById(R.id.tasksview);
-                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                recyclerView.setAdapter(new TaskAdapter(tasks));
 
-        Button ButtonOne = (Button) findViewById(R.id.buttonone);
-        Button ButtonTwo = (Button) findViewById(R.id.buttontwo);
-        Button settings = (Button) findViewById(R.id.settings);
 
 
         settings.setOnClickListener(new  View.OnClickListener(){
@@ -116,6 +146,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+
     }
 
 
@@ -123,35 +155,49 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         String username = sharedPreferences.getString("username","User's tasks");
+        String team = sharedPreferences.getString("team","team");
         TextView nameLabel = findViewById(R.id.nameLabel);
-        nameLabel.setText(username+" tasks");
+        TextView teamLabel = findViewById(R.id.teamname);
+        nameLabel.setText(username+"'s" +" Tasks");
+        teamLabel.setText(team);
 
-
-        List tasks = new ArrayList();
 
         Amplify.DataStore.query(
-                Task.class,
+                Team.class,Team.NAME.contains(team),
                 items -> {
                     while (items.hasNext()) {
-                        Task item = items.next();
-                        tasks.add(item);
+                        Team item = items.next();
+
+                        Amplify.DataStore.query(
+                                Task.class,Task.TEAM_ID.eq( item.getId()),
+                                itemss -> {
+                                    tasks.clear();
+                                    while (itemss.hasNext()) {
+                                        Task item1 = itemss.next();
+                                        tasks.add(item1);
+                                        Log.i("DUCK", "list " + item1.getTeamId());
+
+                                    }
+                                    handler.post(runnable);
+                                },
+                                failure -> Log.e("Amplify", "Could not query DataStore", failure)
+                        );
                         Log.i("Amplify", "Id " + item.getId());
                     }
+                    handler.post(runnable);
                 },
                 failure -> Log.e("Amplify", "Could not query DataStore", failure)
         );
 
 
-        RecyclerView recyclerView = findViewById(R.id.tasksview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        recyclerView.setAdapter(new TaskAdapter(tasks));
 
-    }
 
 
 
+    }
 
 
 }

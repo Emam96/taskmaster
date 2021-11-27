@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,8 +52,8 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
         TextView title = holder.itemView.findViewById(R.id.titletext);
         TextView body = holder.itemView.findViewById(R.id.body);
         TextView state = holder.itemView.findViewById(R.id.state);
-        TextView line = holder.itemView.findViewById(R.id.line);
-        Button details= holder.itemView.findViewById(R.id.details);
+
+//        ImageView details= holder.itemView.findViewById(R.id.arrow);
         title.setText(holder.task.getTitle());
         body.setText(holder.task.getBody());
         state.setText(holder.task.getState());
@@ -63,7 +64,7 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
         String descToHandle = body.getText().toString();
         String statetodaaaamn = state.getText().toString();
 
-        details.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(),Detail.class);
