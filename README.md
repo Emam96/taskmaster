@@ -31,6 +31,10 @@
 
 * We edited the schema and added relations.
 
+## Day 7
+
+* We added auth service using cognito from amplify.
+
 <img src="screenshots/Screenshot_1638008491.png" alt="drawing" width="200"/>
 <img src="screenshots/Screenshot_1638008499.png" alt="drawing" width="200"/>
 <img src="screenshots/Screenshot_1638008505.png" alt="drawing" width="200"/>
