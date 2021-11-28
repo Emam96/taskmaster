@@ -20,21 +20,21 @@
         android:text="Name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.254" />
+        app:layout_constraintVertical_bias="0.243" />
 
     <Spinner
         android:id="@+id/spinner1"
         android:layout_width="209dp"
         android:layout_height="51dp"
+        android:layout_marginTop="20dp"
         app:circularflow_angles="5px"
-        app:layout_constraintBottom_toTopOf="@+id/save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name"
-        app:layout_constraintVertical_bias="0.463"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -44,9 +44,10 @@
         android:text="SAVE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name"
-        app:layout_constraintVertical_bias="0.457" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner1"
+        app:layout_constraintVertical_bias="0.088" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -59,6 +60,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/save"
-        app:layout_constraintVertical_bias="0.882"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/back" />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="108dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="24dp"
+        android:text="Log in"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="143dp"
+        android:layout_height="47dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="#0C3E0A"
+        android:textSize="16sp"
+        android:textStyle="bold"
+
+        app:layout_constraintBottom_toTopOf="@+id/login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/save" />
+
+    <ImageView
+        android:id="@+id/done"
+        android:layout_width="121dp"
+        android:layout_height="102dp"
+        app:layout_constraintBottom_toTopOf="@+id/login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/username"
+        app:layout_constraintTop_toBottomOf="@+id/save"
+        app:layout_constraintVertical_bias="0.472"
+        app:srcCompat="@drawable/done_foreground" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
