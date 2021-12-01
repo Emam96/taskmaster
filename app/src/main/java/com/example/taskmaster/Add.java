@@ -2,11 +2,12 @@ package com.example.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.AsyncTask;
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -17,13 +18,17 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.InputStream;
 
 public class Add extends AppCompatActivity {
 
 
-
+    Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+    Uri uri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +45,21 @@ public class Add extends AppCompatActivity {
         Button buttonthree = (Button) findViewById(R.id.buttonthree);
         TextView title = (TextView) findViewById(R.id.titleentry);
         TextView desc = (TextView) findViewById(R.id.desctask);
+        Button upload = (Button) findViewById(R.id.upload);
+        TextView filename = (TextView) findViewById(R.id.filename);
 
+            filename.setText("Choose a file");
+
+
+        upload.setOnClickListener(new  View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                chooseFile.setType("*/*");
+                chooseFile = Intent.createChooser(chooseFile, "Choose a File");
+                startActivityForResult(chooseFile, 12);
+
+            }
+        });
 
 
 
@@ -62,6 +81,20 @@ public class Add extends AppCompatActivity {
                                                 success -> Log.i("COMO", "Saved item: "),
                                                 error -> Log.e("Amplify", "Could not save item to DataStore", error)
                                         );
+
+                                       String key = item1.getId();
+
+                                        try {
+                                            InputStream file = getContentResolver().openInputStream(uri);
+                                            Amplify.Storage.uploadInputStream(
+                                                    key,
+                                                    file,
+                                                    result -> Log.i("UPLOAD", "Successfully uploaded: " + result.getKey()),
+                                                    storageFailure -> Log.e("UPLOAD", "Upload failed", storageFailure)
+                                            );
+                                        } catch (FileNotFoundException e) {
+                                            e.printStackTrace();
+                                        }
                                             Log.i("EMAM", "Id was stored " );
                                         Log.i("Amplify", "Id " + item.getId());
                                     }
@@ -69,17 +102,47 @@ public class Add extends AppCompatActivity {
                                 failure -> Log.e("Amplify", "Could not query DataStore", failure)
                         );
 
-
-
                 Toast.makeText(getApplicationContext(), "Task Added",Toast.LENGTH_LONG).show();
                 finish();
                     }
         });
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent resultData) {
+        super.onActivityResult(requestCode, resultCode, resultData);
+        if (requestCode == 12 && resultCode == Activity.RESULT_OK) {
+            if (resultData != null) {
+                uri = resultData.getData();
+                TextView filename = (TextView) findViewById(R.id.filename);
+
+                if (uri != null) {
+                    filename.setText(uri.getPath());
+
+                } else {
+                    filename.setText("Choose a file");
+
+                }
+                Toast.makeText(getApplicationContext(),uri.getPath(),Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
     public void back( View view){
         this.finish();
 
     }
+
 
 }

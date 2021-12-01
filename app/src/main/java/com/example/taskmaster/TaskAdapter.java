@@ -71,6 +71,7 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
                 i.putExtra("taskTitle", titleToHandle);
                 i.putExtra("desc", descToHandle);
                 i.putExtra("state", statetodaaaamn);
+                i.putExtra("key", holder.task.getId());
 
                 v.getContext().startActivity(i);
             }

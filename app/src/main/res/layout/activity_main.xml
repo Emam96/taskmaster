@@ -29,8 +29,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tasksview"
-        android:layout_width="294dp"
-        android:layout_height="672dp"
+        android:layout_width="303dp"
+        android:layout_height="597dp"
         android:layout_marginBottom="4dp"
         android:padding="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -117,7 +117,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/nameLabel"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.842" />
+        app:layout_constraintVertical_bias="0.925" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

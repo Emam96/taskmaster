@@ -122,8 +122,6 @@ public class Settings extends AppCompatActivity {
                 failure -> Log.e("Amplify", "Could not query DataStore", failure)
         );
 
-
-
         Amplify.Auth.fetchAuthSession(
                 user -> {
                     if (user.isSignedIn()) {
@@ -142,7 +140,5 @@ public class Settings extends AppCompatActivity {
     public void back( View view){
         this.finish();
     }
-
-
 
 }
