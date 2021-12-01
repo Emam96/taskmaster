@@ -2,10 +2,18 @@ package com.example.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.amplifyframework.core.Amplify;
+
+import java.io.File;
 
 public class Detail extends AppCompatActivity {
 
@@ -27,7 +35,21 @@ public class Detail extends AppCompatActivity {
         TextView statestuff = findViewById(R.id.statestate);
         statestuff.setText(state);
 
+        String key = getIntent().getStringExtra("key");
+        Amplify.Storage.downloadFile(
+                key,
+                new File(getApplicationContext().getFilesDir() + "/download.txt"),
+                result ->{ Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile().getAbsolutePath());
+                    File imgFile = new  File(result.getFile().getAbsolutePath());
+                    if(imgFile.exists()){
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        ImageView taskimage=findViewById(R.id.imagee);
+                        taskimage.setImageBitmap(myBitmap);
+                    }
 
+                },
+                error -> Log.e("MyAmplifyApp",  "Download Failure", error)
+        );
 
     }
 

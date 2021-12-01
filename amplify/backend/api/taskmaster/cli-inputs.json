@@ -10,6 +10,10 @@
     "additionalAuthTypes": [
       {
         "mode": "AWS_IAM"
+      },
+      {
+        "mode": "AMAZON_COGNITO_USER_POOLS",
+        "cognitoUserPoolId": "authtaskmaster"
       }
     ],
     "conflictResolution": {
@@ -18,6 +22,6 @@
       }
     },
     "apiName": "taskmaster",
-    "gqlSchemaPath": "/tmp/amplify-5818e7b7-a87f-4ad6-9f30-ad72b40dc499/amplify/backend/api/taskmaster/schema.graphql"
+    "gqlSchemaPath": "/tmp/amplify-1b7fdc6d-28f3-4bd6-a644-f21dbbb89bf2/amplify/backend/api/taskmaster/schema.graphql"
   }
 }

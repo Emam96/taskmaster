@@ -32,6 +32,7 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.addPlugin(new AWSS3StoragePlugin());
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.addPlugin(new AWSDataStorePlugin());
             Amplify.configure(getApplicationContext());
@@ -98,10 +100,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-  List tasks = new ArrayList();
+//  List tasks = new ArrayList();
 
         Amplify.DataStore.query(
-                Task.class,
+                Task.class,Task.TEAM_ID.eq("7ddc0fad-18be-4690-94f9-27efaff0cbae"),
                 items -> {
                     while (items.hasNext()) {
                         Task item = items.next();
