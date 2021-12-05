@@ -2,9 +2,11 @@ package com.example.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -22,6 +24,11 @@ public class Detail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        TextView location = findViewById(R.id.location);
+
+
+
+
 
         String taskName = getIntent().getStringExtra("taskTitle");
         TextView tasktitle = findViewById(R.id.taskTitle);
@@ -36,6 +43,12 @@ public class Detail extends AppCompatActivity {
         statestuff.setText(state);
 
         String key = getIntent().getStringExtra("key");
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Detail.this);
+        String locationData = sharedPreferences.getString(key,"No Location Found");
+
+        location.setText(locationData);
+
         Amplify.Storage.downloadFile(
                 key,
                 new File(getApplicationContext().getFilesDir() + "/download.txt"),

@@ -35,6 +35,15 @@
 
 * We added auth service using cognito from amplify.
 
+
+## Day 8 
+
+* Added s3 to upload files.
+
+## Day 9 
+
+* Added location functionality.
+
 <img src="screenshots/Screenshot_1638008491.png" alt="drawing" width="200"/>
 <img src="screenshots/Screenshot_1638008499.png" alt="drawing" width="200"/>
 <img src="screenshots/Screenshot_1638008505.png" alt="drawing" width="200"/>
