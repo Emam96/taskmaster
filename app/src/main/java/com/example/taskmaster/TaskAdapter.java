@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,7 +15,7 @@ import com.amplifyframework.datastore.generated.model.Task;
 
 import java.util.List;
 
-public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder>{
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
     public List<Task> tasks;
 
@@ -23,7 +24,7 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
 
     }
 
-    public static class TaskViewHolder extends RecyclerView.ViewHolder{
+    public static class TaskViewHolder extends RecyclerView.ViewHolder {
 
         public Task task;
         public View itemView;
@@ -39,7 +40,7 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_task,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_task, parent, false);
         TaskViewHolder taskViewHolder = new TaskViewHolder(view);
         return taskViewHolder;
     }
@@ -59,7 +60,6 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
         state.setText(holder.task.getState());
 
 
-
         String titleToHandle = title.getText().toString();
         String descToHandle = body.getText().toString();
         String statetodaaaamn = state.getText().toString();
@@ -67,7 +67,7 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(),Detail.class);
+                Intent i = new Intent(v.getContext(), Detail.class);
                 i.putExtra("taskTitle", titleToHandle);
                 i.putExtra("desc", descToHandle);
                 i.putExtra("state", statetodaaaamn);
@@ -78,7 +78,6 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
         });
 
     }
-
 
 
     @Override
