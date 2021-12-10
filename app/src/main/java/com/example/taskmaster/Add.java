@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,8 +50,9 @@ public class Add extends AppCompatActivity {
     Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
     Uri uri;
     String loc;
+    String key;
 
-
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,23 +77,25 @@ public class Add extends AppCompatActivity {
         filename.setText("Choose a file");
 
 
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if (type.startsWith("image/")) {
+                handleShared(intent);
+            }
+        }
+
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1212);
         }
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
-
                         if (location != null) {
-
                             Geocoder geocoder;
                             List<Address> addresses = new ArrayList<>();
                             geocoder = new Geocoder(Add.this, Locale.getDefault());
@@ -101,87 +105,79 @@ public class Add extends AppCompatActivity {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-
-                            String address = addresses.get(0).getAddressLine(0);
                             String city = addresses.get(0).getLocality();
-                            String state = addresses.get(0).getAdminArea();
                             String country = addresses.get(0).getCountryName();
-                            String postalCode = addresses.get(0).getPostalCode();
-                            String knownName = addresses.get(0).getFeatureName();
-
                             loc = city + "- " + country;
-
                             System.out.println("LLLLLLLLLLLLLLLLLLLLLLLLLLL" + loc);
-
                         }
                     }
                 });
 
 
-            upload.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    chooseFile.setType("*/*");
-                    chooseFile = Intent.createChooser(chooseFile, "Choose a File");
-                    startActivityForResult(chooseFile, 12);
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseFile.setType("*/*");
+                chooseFile = Intent.createChooser(chooseFile, "Choose a File");
+                startActivityForResult(chooseFile, 12);
 
-                }
-            });
+            }
+        });
 
 
-            buttonthree.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+        buttonthree.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
-                    String titletaken = title.getText().toString();
-                    String desctaken = desc.getText().toString();
-                    String team = s.getSelectedItem().toString();
+                String titletaken = title.getText().toString();
+                String desctaken = desc.getText().toString();
+                String team = s.getSelectedItem().toString();
 
-                    Amplify.DataStore.query(
-                            Team.class, Team.NAME.contains(team),
-                            items -> {
-                                while (items.hasNext()) {
-                                    Team item = items.next();
-                                    Task item1 = Task.builder().title(titletaken).body(desctaken).state("Active").teamId(item.getId()).build();
-                                    Amplify.DataStore.save(
-                                            item1,
-                                            success -> Log.i("COMO", "Saved item: "),
-                                            error -> Log.e("Amplify", "Could not save item to DataStore", error)
+                Amplify.DataStore.query(
+                        Team.class, Team.NAME.contains(team),
+                        items -> {
+                            while (items.hasNext()) {
+                                Team item = items.next();
+                                Task item1 = Task.builder().title(titletaken).body(desctaken).state("Active").teamId(item.getId()).build();
+                                Amplify.DataStore.save(
+                                        item1,
+                                        success -> Log.i("COMO", "Saved item: "),
+                                        error -> Log.e("Amplify", "Could not save item to DataStore", error)
+                                );
+
+                                key = item1.getId();
+
+                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Add.this);
+                                sharedPreferences.edit().putString(key, loc).apply();
+
+
+                                try {
+                                    InputStream file = getContentResolver().openInputStream(uri);
+                                    Amplify.Storage.uploadInputStream(
+                                            key,
+                                            file,
+                                            result -> Log.i("UPLOAD", "Successfully uploaded: " + result.getKey()),
+                                            storageFailure -> Log.e("UPLOAD", "Upload failed", storageFailure)
                                     );
 
-                                    String key = item1.getId();
-
-                                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Add.this);
-                                    sharedPreferences.edit().putString(key, loc).apply();
-
-
-                                    try {
-                                        InputStream file = getContentResolver().openInputStream(uri);
-                                        Amplify.Storage.uploadInputStream(
-                                                key,
-                                                file,
-                                                result -> Log.i("UPLOAD", "Successfully uploaded: " + result.getKey()),
-                                                storageFailure -> Log.e("UPLOAD", "Upload failed", storageFailure)
-                                        );
-                                    } catch (FileNotFoundException e) {
-                                        e.printStackTrace();
-                                    }
-                                    Log.i("EMAM", "Id was stored ");
-                                    Log.i("Amplify", "Id " + item.getId());
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
                                 }
-                            },
-                            failure -> Log.e("Amplify", "Could not query DataStore", failure)
-                    );
+                                Log.i("EMAM", "Id was stored ");
+                                Log.i("Amplify", "Id " + item.getId());
+                            }
+                        },
+                        failure -> Log.e("Amplify", "Could not query DataStore", failure)
+                );
 
-                    Toast.makeText(getApplicationContext(), "Task Added", Toast.LENGTH_LONG).show();
-                    finish();
-                }
-            });
+                Toast.makeText(getApplicationContext(), "Task Added", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
 
-        }
-
-
+    }
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onActivityResult(int requestCode, int resultCode,
                                  Intent resultData) {
@@ -198,18 +194,28 @@ public class Add extends AppCompatActivity {
                     filename.setText("Choose a file");
 
                 }
-                Toast.makeText(getApplicationContext(),uri.getPath(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), uri.getPath(), Toast.LENGTH_SHORT).show();
             }
         }
     }
 
 
-    public void back( View view){
+    @SuppressLint("SetTextI18n")
+    void handleShared(Intent intent) {
+        uri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+        TextView filename = (TextView) findViewById(R.id.filename);
+        if (uri != null) {
+            filename.setText(uri.getPath());
+        } else {
+            filename.setText("Choose a file");
+        }
+        // Update UI to reflect image being shared
+    }
+
+    public void back(View view) {
         this.finish();
 
     }
-
-
 
 
 }

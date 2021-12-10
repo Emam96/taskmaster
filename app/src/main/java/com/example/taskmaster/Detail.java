@@ -27,9 +27,6 @@ public class Detail extends AppCompatActivity {
         TextView location = findViewById(R.id.location);
 
 
-
-
-
         String taskName = getIntent().getStringExtra("taskTitle");
         TextView tasktitle = findViewById(R.id.taskTitle);
         tasktitle.setText(taskName);
@@ -45,28 +42,29 @@ public class Detail extends AppCompatActivity {
         String key = getIntent().getStringExtra("key");
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Detail.this);
-        String locationData = sharedPreferences.getString(key,"No Location Found");
+        String locationData = sharedPreferences.getString(key, "No Location Found");
 
         location.setText(locationData);
 
         Amplify.Storage.downloadFile(
                 key,
                 new File(getApplicationContext().getFilesDir() + "/download.txt"),
-                result ->{ Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile().getAbsolutePath());
-                    File imgFile = new  File(result.getFile().getAbsolutePath());
-                    if(imgFile.exists()){
+                result -> {
+                    Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile().getAbsolutePath());
+                    File imgFile = new File(result.getFile().getAbsolutePath());
+                    if (imgFile.exists()) {
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        ImageView taskimage=findViewById(R.id.imagee);
+                        ImageView taskimage = findViewById(R.id.imagee);
                         taskimage.setImageBitmap(myBitmap);
                     }
 
                 },
-                error -> Log.e("MyAmplifyApp",  "Download Failure", error)
+                error -> Log.e("MyAmplifyApp", "Download Failure", error)
         );
 
     }
 
-    public void back( View view){
+    public void back(View view) {
 
         this.finish();
 
